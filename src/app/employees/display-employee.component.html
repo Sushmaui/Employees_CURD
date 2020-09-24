@@ -1,0 +1,84 @@
+<div class="panel panel-primary" [class.panel-success]="selectedEmployeeId === employee.id">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{employee.name}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="col-xs-10">
+      <div class="row  vertical-align">
+        <div class="col-xs-4">
+          <img class="imageClass" [src]="employee.photoPath" />
+        </div>
+        <div class="col-xs-8">
+          <div class="row">
+            <div class="col-xs-6">
+              Name
+            </div>
+            <div class="col-xs-6">
+              :{{employee.name}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              ID
+            </div>
+            <div class="col-xs-6">
+              :{{employee.id}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              Gender
+            </div>
+            <div class="col-xs-6">
+              :{{employee.gender}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              Date of Birth
+            </div>
+            <div class="col-xs-6">
+              :{{employee.dateOfBirth|date}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              email
+            </div>
+            <div class="col-xs-6">
+              :{{employee.email}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              Department
+            </div>
+            <div class="col-xs-6" [ngSwitch]="employee.department">
+              :
+              <span *ngSwitchCase="1">Help Desk</span>
+              <span *ngSwitchCase="2">HR</span>
+              <span *ngSwitchCase="3">IT</span>
+              <span *ngSwitchCase="4">Payroll</span>
+              <span *ngSwitchDefault>N/A</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              Status
+            </div>
+            <div class="col-xs-6">
+              :{{employee.isActive}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-footer">
+    <button class="btn btn-primary" (click)="viewEmployee()"> View</button>
+    <button class="btn btn-primary" (click)="editEmployee()">Edit</button>
+    <button class="btn btn-danger">Delete</button>
+  </div>
+
+</div>

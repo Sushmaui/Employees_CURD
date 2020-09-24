@@ -1,0 +1,22 @@
+<div class="form-group">
+  <input type="text" class="form-control" placeholder="Search By Name"
+    [(ngModel)]="searchTerm" />
+</div>
+
+<div *ngFor="let employee of filteredEmployees">
+    <app-display-employee [employee]="employee" [searchTerm]="searchTerm" #childComponent >
+    </app-display-employee>
+</div>
+
+<!--==============================================================================================-->
+<!--We are using above code that is filteredEmployees because angular says to maitain filter with in components for pure and impure pipes which is best practice instead of creating coustom pieps nad importing in our components.-->
+<!--Below code is used instead of above code when we are using coustem pipes filter (employee-filter.pipes.ts file)-->
+
+<!-- <div *ngFor="let employee of employees | employeeFilter: searchTerm">
+  <div (click)="onClick(employee.id)" class="pointerCursor"> 
+    <app-display-employee [employee]="employee" #childComponent>
+    </app-display-employee>
+  </div>
+</div> -->
+
+<!--=========================================================================================-->
