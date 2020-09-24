@@ -51,7 +51,6 @@ export class CreateEmployeeComponent implements OnInit {
 
   private getEmployee(id: number) {
     if (id === 0) {
-      this.creatEmployeeFrom.reset();
       this.employee = {
         id: null,
         name: null,
@@ -63,8 +62,8 @@ export class CreateEmployeeComponent implements OnInit {
         department: 'select',
         isActive: null,
         photoPath: null,
-      };
-      
+      }; 
+      this.creatEmployeeFrom.reset();
     } else {
       this.employee = Object.assign({}, this._employeeService.getEmployee(id));
     }
