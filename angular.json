@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-curd"
+    }
+  },
+  "defaultProject": "angular-curd",
+  "cli": {
+    "analytics": false
+  }
 }
