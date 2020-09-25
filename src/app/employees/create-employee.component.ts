@@ -12,8 +12,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./create-employee.component.css']
 })
 export class CreateEmployeeComponent implements OnInit {
-  @ViewChild('employeeForm') public creatEmployeeFrom: NgForm;
+  @ViewChild('employeeForm') public createEmployeeForm: NgForm;
   previewPhoto = false;
+  panelTitle: string;
   dateOfBirth: Date= new Date(2018,0,30);
   datePickerConfig: Partial<BsDatepickerConfig>;
   employee: Employee;
@@ -23,7 +24,7 @@ export class CreateEmployeeComponent implements OnInit {
     {id: 2, name: 'HR'},
     {id: 3, name: 'IT'},
     {id: 4, name: 'Payroll'},
-  ]
+  ];
   
   constructor(private _employeeService: EmployeeService,
               private _router: Router,
@@ -32,26 +33,23 @@ export class CreateEmployeeComponent implements OnInit {
       {
         containerClass: 'theme-dark-blue',
         showWeekNumbers: true,
-        minDate: new Date(2018, 0, 1),
-        maxDate: new Date(2018, 11, 31),
-        dateInputFormat: 'DD/MM/YYYY',
+        dateInputFormat: 'MM/DD/YYYY',
       });
   }
 
   togglePhotoPreview(){
-    this.previewPhoto=!this.previewPhoto;
+    this.previewPhoto = !this.previewPhoto;
   }
 
   ngOnInit(): void {
     this._route.paramMap.subscribe(parameterMap=>{
       const id= +parameterMap.get('id');
       this.getEmployee(id);
-    })
+    });
   }
 
   private getEmployee(id: number) {
     if (id === 0) {
-      this.creatEmployeeFrom.reset();
       this.employee = {
         id: null,
         name: null,
@@ -64,21 +62,43 @@ export class CreateEmployeeComponent implements OnInit {
         isActive: null,
         photoPath: null,
       };
-      
+      this.panelTitle = 'Create Employee'
+      this.createEmployeeForm.reset();
+
     } else {
-      this.employee = Object.assign({}, this._employeeService.getEmployee(id));
+      this.panelTitle = 'Edit Employee'
+      this._employeeService.getEmployee(id).subscribe(
+        (employee) => this.employee =employee,
+        (error:any) => console.log(error)
+      );
     }
   }
 
-  private newMethod() {
-    this.creatEmployeeFrom.reset();
-  }
+  // private newMethod() {
+  //   this.createEmployeeForm.reset();
+  // }
 
-  saveEmployee(): void{
-    const newEmployee: Employee = Object.assign({}, this.employee)
-    this._employeeService.save(newEmployee);
-    this.creatEmployeeFrom.reset();
-    this._router.navigate(['list']);
+  saveEmployee(): void {
+    if(this.employee.id == null){
+      this._employeeService.addEmployee(this.employee).subscribe(
+        (data: Employee) => {
+          console.log(data);
+          this.createEmployeeForm.reset();
+          this._router.navigate(['list']);
+        },
+        (error: any)=>console.log(error)
+      );
+    }else{
+      this._employeeService.updateEmployee(this.employee).subscribe(
+        () => {
+          this.createEmployeeForm.reset();
+          this._router.navigate(['list']);
+        },
+        (error: any)=>console.log(error)
+      );
+    }
+    
+
   }
 
 }

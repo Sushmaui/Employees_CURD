@@ -1,0 +1,40 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "Maik",
+      "gender": "Male",
+      "contactPreference": "Phone",
+      "phoneNumber": 2389456194,
+      "email": "Maik@tech.com",
+      "dateOfBirth": "04/06/1991",
+      "department": "3",
+      "isActive": true,
+      "photoPath": "assets/images/man.png"
+    },
+    {
+      "id": 2,
+      "name": "Joe",
+      "gender": "Male",
+      "contactPreference": "Email",
+      "phoneNumber": 238909875,
+      "email": "joe@tech.com",
+      "dateOfBirth": "11/20/1971",
+      "department": "2",
+      "isActive": true,
+      "photoPath": "assets/images/men.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Sammy",
+      "gender": "Female",
+      "contactPreference": "Email",
+      "phoneNumber": 238932185,
+      "email": "sammmy@tech.com",
+      "dateOfBirth": "11/20/1992",
+      "department": "4",
+      "isActive": true,
+      "photoPath": "assets/images/women.png"
+    }
+  ]
+}

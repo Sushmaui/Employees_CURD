@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {HttpClientModule} from '@angular/common/http'
+
+
+
 import {BsDatepickerModule}  from 'ngx-bootstrap/datepicker';
 import {SelectRequiredValidatorDirective} from './shared/select-required-validator.directive';
 import {EmployeeService} from './employees/employee.service';
@@ -16,10 +20,14 @@ import {CreateEmployeeCanDeactivateGuardService} from './employees/create-employ
 import { EmployeeDetailsComponent } from './employees/employee-details.component';
 import { PageNotFoundComponent } from './page-not-found.component'
 import { EmployeeDetailsGuardsService } from './employees/employee-details-guard.service';
-//import {EmployeeFilterPipe} from './employees/employee-filter.pipe'
+import { AccordionComponent } from './shared/accordion.component';
+import { EmployeeListResolverService } from './employees/employee-list-resolver.service';
+
 
 const appRoutes: Routes=[
-  {path: 'list', component: ListEmployeesComponent},
+  {path: 'list', 
+      component: ListEmployeesComponent,
+      resolve:{employeeList:EmployeeListResolverService}},
   {path: 'edit/:id', 
     component: CreateEmployeeComponent,
     canDeactivate: [CreateEmployeeCanDeactivateGuardService]
@@ -41,17 +49,19 @@ const appRoutes: Routes=[
     DisplayEmployeeComponent,
     EmployeeDetailsComponent,
     PageNotFoundComponent,
-    //EmployeeFilterPipe
+    AccordionComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [EmployeeService,CreateEmployeeCanDeactivateGuardService,EmployeeDetailsGuardsService],
+  providers: [EmployeeService, CreateEmployeeCanDeactivateGuardService, EmployeeDetailsGuardsService,EmployeeListResolverService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

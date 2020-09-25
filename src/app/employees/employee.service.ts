@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Employee } from '../models/employee.model';
+import {HttpClient, HttpErrorResponse, HttpHandler, HttpHeaders} from '@angular/common/http';
+import { Observable } from 'rxjs';
+// import 'rxjs/add/operator/catch';
+// import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+// import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class EmployeeService {
+    constructor(private httpClient: HttpClient){}
     private listEmployees: Employee[] = [
         {
             id: 1,
@@ -40,18 +46,46 @@ export class EmployeeService {
         },
     ];
 
+    baseUrl = 'http://localhost:3000/employees';
  
-    getEmployees(): Employee[]{
-        return (this.listEmployees);
+    getEmployees(): Observable<Employee[]>{
+        return this.httpClient.get<Employee[]>(this.baseUrl);
     }
 
-    getEmployee(id:number): Employee{
-        return this.listEmployees.find(e => e.id ===id);
+    // private handleError(errorResponse: HttpErrorResponse){
+    //     if(errorResponse.error instanceof ErrorEvent){
+    //         console.log('Client Side Error:', errorResponse.error.message);
+    //     }else{
+    //         console.log('Server Side Error:', errorResponse)
+    //     }
+
+    //     return new ErrorObservable('There is problem with the service. We are notified & working on it')
+    // }
+
+    getEmployee(id:number): Observable<Employee>{
+        return this.httpClient.get<Employee>(`${this.baseUrl}/${id}`)
     }
 
-    save(employee: Employee){
-        this.listEmployees.push(employee);
+    addEmployee(employee: Employee): Observable<Employee> {
+        return this.httpClient.post<Employee>(this.baseUrl, employee, {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            })
+        })
+
     }
 
+    updateEmployee(employee: Employee): Observable<void> {
+        return this.httpClient.put<void>(`${this.baseUrl}/${employee.id}`, employee, {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            })
+        })
+
+    }
+
+    deleteEmployee(id:number): Observable<void> {
+        return this.httpClient.delete<void>(`${this.baseUrl}/${id}`)
+    }
 
 }
