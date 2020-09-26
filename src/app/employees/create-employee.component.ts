@@ -61,10 +61,15 @@ export class CreateEmployeeComponent implements OnInit {
         department: 'select',
         isActive: null,
         photoPath: null,
+<<<<<<< HEAD
       };
       this.panelTitle = 'Create Employee'
       this.createEmployeeForm.reset();
 
+=======
+      }; 
+      this.creatEmployeeFrom.reset();
+>>>>>>> d90258bfecd035e57e82fa259a86d7fa2bec3197
     } else {
       this.panelTitle = 'Edit Employee'
       this._employeeService.getEmployee(id).subscribe(
